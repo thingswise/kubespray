@@ -302,7 +302,7 @@ before_script:
 
 
 # Builds for PRs only (premoderated by unit-tests step) and triggers (auto)
-### PR JOBS
+### PR JOBS PART1
 gce_coreos-calico-aio:
   stage: deploy-part1
   <<: *job
@@ -314,8 +314,9 @@ gce_coreos-calico-aio:
   except: ['triggers']
   only: [/^pr-.*$/]
 
+### PR JOBS PART2
 do_ubuntu-canal-ha:
-  stage: deploy-part1
+  stage: deploy-part2
   <<: *job
   <<: *do
   variables:
@@ -325,7 +326,7 @@ do_ubuntu-canal-ha:
   only: [/^pr-.*$/]
 
 gce_centos7-flannel-addons:
-  stage: deploy-part1
+  stage: deploy-part2
   <<: *job
   <<: *gce
   variables:
@@ -336,7 +337,7 @@ gce_centos7-flannel-addons:
   only: [/^pr-.*$/]
 
 gce_ubuntu-weave-sep:
-  stage: deploy-part1
+  stage: deploy-part2
   <<: *job
   <<: *gce
   variables:
