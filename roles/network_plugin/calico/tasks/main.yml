@@ -81,7 +81,7 @@
 
 - name: Calico | wait for etcd
   uri:
-    url: https://localhost:2379/health
+    url: http://localhost:2379/health
     validate_certs: no
     client_cert: "{{ etcd_cert_dir }}/node-{{ inventory_hostname }}.pem"
     client_key: "{{ etcd_cert_dir }}/node-{{ inventory_hostname }}-key.pem"
@@ -98,7 +98,7 @@
       --cacert {{ etcd_cert_dir }}/ca.pem \
       --cert {{ etcd_cert_dir}}/admin-{{ groups['etcd'][0] }}.pem \
       --key {{ etcd_cert_dir }}/admin-{{ groups['etcd'][0] }}-key.pem \
-      https://localhost:2379/v2/keys/calico/v1/ipam/v4/pool
+      http://localhost:2379/v2/keys/calico/v1/ipam/v4/pool
   register: calico_conf
   retries: 4
   delay: "{{ retry_stagger | random + 3 }}"
@@ -127,7 +127,7 @@
       --cacert {{ etcd_cert_dir }}/ca.pem \
       --cert {{ etcd_cert_dir}}/admin-{{ groups['etcd'][0] }}.pem \
       --key {{ etcd_cert_dir }}/admin-{{ groups['etcd'][0] }}-key.pem \
-      https://localhost:2379/v2/keys/calico/v1/ipam/v4/pool
+      http://localhost:2379/v2/keys/calico/v1/ipam/v4/pool
   register: calico_pools_raw
   retries: 4
   delay: "{{ retry_stagger | random + 3 }}"
