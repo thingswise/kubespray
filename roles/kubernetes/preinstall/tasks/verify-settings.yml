@@ -82,7 +82,7 @@
   assert:
     that: rbac_enabled
   when: dashboard_enabled
-  ignore_errors: "{{ ignore_assert_errors }}"
+  ignore_errors: true
 
 - name: Stop if RBAC and anonymous-auth are not enabled when insecure port is disabled
   assert:
