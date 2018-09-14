@@ -18,5 +18,14 @@ flannel_cpu_limit: 300m
 flannel_memory_requests: 64M
 flannel_cpu_requests: 150m
 
-# Legacy directory, will be removed if found.
-flannel_cert_dir: /etc/flannel/certs
+# ipsec default settings
+
+# Forces the use UDP encapsulation of packets which can help with some NAT gateways.
+flannel_ipsec_udpencap: false
+
+# The pre shared key to use. It needs to be at least 96 characters long.
+#  One method for generating this key is to run `dd if=/dev/urandom count=48 bs=1 status=none | xxd -p -c 48`
+# flannel_ipsec_psk
+
+# Change this string to choose another ESP Proposal.
+flannel_ipsec_espproposal: "aes128gcm16-sha256-prfsha256-ecp256"

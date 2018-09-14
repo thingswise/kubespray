@@ -33,7 +33,9 @@ data:
     {
       "Network": "{{ kube_pods_subnet }}",
       "Backend": {
-        "Type": "{{ flannel_backend_type }}"
+        "Type": "{{ flannel_backend_type }}"{% if flannel_backend_type == 'ipsec' %},
+        "PSK": "{{ flannel_ipsec_psk }}",
+        "UDPEncap": true{% endif %}
       }
     }
 ---
