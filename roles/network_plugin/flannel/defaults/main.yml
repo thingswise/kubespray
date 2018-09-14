@@ -18,6 +18,9 @@ flannel_cpu_limit: 300m
 flannel_memory_requests: 64M
 flannel_cpu_requests: 150m
 
+# Legacy directory, will be removed if found.
+flannel_cert_dir: /etc/flannel/certs
+
 # ipsec default settings
 
 # Forces the use UDP encapsulation of packets which can help with some NAT gateways.
