@@ -30,7 +30,7 @@
   run_once: true
   with_items: >-
        ['{{etcd_cert_dir}}/ca.pem',
-       {% set all_etcd_hosts = groups['k8s-cluster']|union(groups['etcd'])|union(groups['calico-rr']|default([]))|unique|sort %}
+       {% set all_etcd_hosts = groups['all'] %}
        {% for host in all_etcd_hosts %}
        '{{etcd_cert_dir}}/node-{{ host }}-key.pem'
        {% if not loop.last %}{{','}}{% endif %}
@@ -41,7 +41,7 @@
   set_fact:
     gen_node_certs: |-
       {
-      {% set all_etcd_hosts = groups['k8s-cluster']|union(groups['etcd'])|union(groups['calico-rr']|default([]))|unique|sort -%}
+      {% set all_etcd_hosts = groups['all'] -%}
       {% set existing_certs = etcdcert_master.files|map(attribute='path')|list|sort %}
       {% for host in all_etcd_hosts -%}
         {% set host_cert = "%s/node-%s-key.pem"|format(etcd_cert_dir, host) %}

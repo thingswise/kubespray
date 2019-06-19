@@ -54,7 +54,7 @@
                     {{ m }}
                   {% endif %}
                 {% endfor %}"
-    - HOSTS: "{% for h in (groups['k8s-cluster'] + groups['calico-rr']|default([]))|unique %}
+    - HOSTS: "{% for h in groups['all'] %}
                 {% if gen_node_certs[h] %}
                     {{ h }}
                 {% endif %}
@@ -78,7 +78,7 @@
                       'member-{{ inventory_hostname }}.pem',
                       'member-{{ inventory_hostname }}-key.pem']
     all_node_certs: "['ca.pem',
-                    {% for node in (groups['k8s-cluster'] + groups['calico-rr']|default([]))|unique %}
+                    {% for node in groups['all'] %}
                     'node-{{ node }}.pem',
                     'node-{{ node }}-key.pem',
                     {% endfor %}]"
@@ -106,9 +106,7 @@
   no_log: true
   check_mode: no
   delegate_to: "{{groups['etcd'][0]}}"
-  when: (('calico-rr' in groups and inventory_hostname in groups['calico-rr']) or
-        inventory_hostname in groups['k8s-cluster']) and
-        sync_certs|default(false) and inventory_hostname not in groups['etcd']
+  when: sync_certs|default(false) and inventory_hostname not in groups['etcd']
   notify: set etcd_secret_changed
 
 # NOTE(mattymo): Use temporary file to copy master certs because we have a ~200k
